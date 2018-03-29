@@ -8,11 +8,15 @@ class Simulation {
     onReady() {
         console.log("Simulation.onReady")
         $("#Reset").on("click", $.proxy(this.gridResize, this))
+        $("#MoveForward").on("click", $.proxy(this.moveForward, this))
     }
     get Size() {
         return parseInt($("input:radio[name='size']:checked").val())
     }
     gridResize() {
-        $(this).trigger("change")
+        $(this).trigger("reset")
+    }
+    moveForward() {
+        $(this).trigger("run")
     }
 }

@@ -21,8 +21,9 @@ class Langton {
         console.log(this.Simulation.gridResize())
 
         $(this.Ant).on("move", $.proxy(this.displayAntInfo, this))
-        $(this.Simulation).on("change", $.proxy(this.gridUpdate, this))
+        $(this.Simulation).on("reset", $.proxy(this.gridUpdate, this))
         $(this.Simulation.gridResize).on("change", $.proxy(this.gridUpdate, this))
+        $(this.Simulation).on("run", $.proxy(this.moveUpdate, this))
 
 
         console.log("Langton.onReady")
@@ -37,6 +38,20 @@ class Langton {
     gridUpdate() {
         this.Grid.Size = this.Simulation.Size
         this.Ant.Reset(this.Grid.MiddleX, this.Grid.MiddleY)
+    }
+    moveUpdate() {
+        // MOVE FORWARD WITH CONDITION
+        // COLOR RESULT PREVIOUS MOVE
+        for(let i=0; i < $('#NbSteps').val(); i++) {
+            if(this.Grid.GetColor(this.Ant.X, this.Ant.Y) == '#FFFFFF') {
+                this.Grid.SetColor(this.Ant.X, this.Ant.Y, "#000000")
+                this.Ant.Turn("right")
+            }
+            else if(this.Grid.GetColor(this.Ant.X, this.Ant.Y) == '#000000') {
+                this.Grid.SetColor(this.Ant.X, this.Ant.Y, "#FFFFFF")            
+                this.Ant.Turn("left")
+            }  
+        }
     }
 }
 
