@@ -35,6 +35,7 @@ class Langton {
         $(".ant-nb-steps").html(this.Ant.NbSteps)
     }
     gridUpdate() {
+        $.proxy(this.moveRun(false), this)
         this.Grid.Size = this.Simulation.Size
         this.Ant.Reset(this.Grid.MiddleX, this.Grid.MiddleY)
     }
