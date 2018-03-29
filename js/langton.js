@@ -18,8 +18,11 @@ class Langton {
         this.Grid = new Grid("Grid", this.Simulation.Size)
         this.Ant = new Ant(this.Grid.MiddleX, this.Grid.MiddleY)
         this.displayAntInfo()
+        console.log(this.Simulation.gridResize())
 
         $(this.Ant).on("move", $.proxy(this.displayAntInfo, this))
+        $(this.Simulation).on("change", $.proxy(this.gridUpdate, this))
+
 
         console.log("Langton.onReady")
     }
@@ -29,6 +32,10 @@ class Langton {
         $(".ant-y").html(this.Ant.Y)
         $(".ant-direction").html(this.Ant.Direction)
         $(".ant-nb-steps").html(this.Ant.NbSteps)
+    }
+    gridUpdate() {
+        this.Grid.Size = this.Simulation.Size
+        this.Ant.Reset(this.Grid.MiddleX, this.Grid.MiddleY)
     }
 }
 
