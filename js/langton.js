@@ -25,6 +25,10 @@ class Langton {
     }
     displayAntInfo() {
         this.Grid.SetColor(this.Ant.X, this.Ant.Y, Ant.Color)
+        $(".ant-x").html(this.Ant.X)
+        $(".ant-y").html(this.Ant.Y)
+        $(".ant-direction").html(this.Ant.Direction)
+        $(".ant-nb-steps").html(this.Ant.NbSteps)
     }
 }
 
