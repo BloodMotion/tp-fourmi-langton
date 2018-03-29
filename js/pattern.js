@@ -7,7 +7,8 @@ class Pattern {
     }
     onReady() {
         console.log("Pattern.onReady")
-        Pattern.loadPanel()
+        this.loadPanel()
+        $("#Pattern").on("change", $.proxy(this.loadPanel, this))
     }
     static GetSelect(json, selected) {
         let html = '<select>'
@@ -39,9 +40,10 @@ class Pattern {
         html += '</tr>'
         return html
     }
-    static loadPanel() {
-        // Display panel
+    loadPanel() {
+        // Basics
         $('.condition').show()
+        let value = $('#Pattern').val() || "Simple"
 
         // Request
         let request = $.ajax({
@@ -52,8 +54,21 @@ class Pattern {
 
         // Done
         request.done(function (msg) {
+            // Reset select
+            $('#CurrentPattern > tbody > tr').remove()
+            $('#Pattern > option').remove()
+            
+            // Process
             msg.patterns.map((e, i) => {
-                $('#Pattern').append('<option value="' + e.name + '">' + e.name + '</option>')
+                if(e.name === value) {
+                    $('#Pattern').append('<option selected value="' + e.name + '">' + e.name + '</option>')
+                    e.steps.map((e, i) => {
+                        $('#CurrentPattern').append(Pattern.GetHtmlRow(e))
+                    })
+                    $('#CurrentPattern').append(Pattern.GetHtmlRow(e.steps))
+                } else {
+                    $('#Pattern').append('<option value="' + e.name + '">' + e.name + '</option>')
+                }              
             })
         });
 
