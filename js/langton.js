@@ -25,7 +25,6 @@ class Langton {
         $(this.Simulation).on("run", $.proxy(this.moveUpdate, this))
         $(this.Simulation).on("start", $.proxy(this.moveStart, this))
 
-
         console.log("Langton.onReady")
     }
     displayAntInfo() {
@@ -54,10 +53,31 @@ class Langton {
         }
     }
     moveStart() {
-        setInterval( () => {
-            if(this.Grid.GetColor(this.Ant.X, this.Ant.Y) !== null)
-                $.proxy(this.moveUpdate(), this)
-        }, $("#Interval").val())
+        // Start & stop
+        if($("#Start").data('state') === 'stop') {
+            console.log("Stopped")
+
+            $("#Start").data('state', 'run')
+            $("#Start").html('D&eacute;marrer')
+            
+            $.proxy(this.moveRun(false), this)
+        } else {
+            console.log("Running")
+
+            $("#Start").data('state', 'stop')
+            $("#Start").html('Arreter')
+            
+            $.proxy(this.moveRun(true), this)
+        }
+    }
+    moveRun(state) { 
+        if(state) {
+            this.timer = setInterval( () => {
+                this.moveUpdate()
+            }, $("#Interval").val())
+        } else {
+            clearInterval(this.timer) 
+        }
     }
 }
 
