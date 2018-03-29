@@ -7,6 +7,7 @@ class Pattern {
     }
     onReady() {
         console.log("Pattern.onReady")
+        Pattern.loadPanel()
     }
     static GetSelect(json, selected) {
         let html = '<select>'
@@ -37,6 +38,29 @@ class Pattern {
         html += '<td class="then-direction">' + Pattern.GetSelect(PatternDirection, settings.then.direction) + '</td>'
         html += '</tr>'
         return html
+    }
+    static loadPanel() {
+        // Display panel
+        $('.condition').show()
+
+        // Request
+        let request = $.ajax({
+            url: 'https://api.myjson.com/bins/crrrn',
+            method: 'GET',
+            dataType: "json"
+        });
+
+        // Done
+        request.done(function (msg) {
+            msg.patterns.map((e, i) => {
+                $('#Pattern').append('<option value="' + e.name + '">' + e.name + '</option>')
+            })
+        });
+
+        // Fail
+        request.fail(function (jqXHR, textStatus) {
+            console.log("Request failed : " + textStatus);
+        });
     }
 }
 

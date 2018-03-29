@@ -24,7 +24,7 @@ class Langton {
         $(this.Simulation.gridResize).on("change", $.proxy(this.gridUpdate, this))
         $(this.Simulation).on("run", $.proxy(this.moveUpdate, this))
         $(this.Simulation).on("start", $.proxy(this.moveStart, this))
-
+        
         console.log("Langton.onReady")
     }
     displayAntInfo() {
