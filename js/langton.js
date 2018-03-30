@@ -42,17 +42,17 @@ class Langton {
         $("#Start").html('D&eacute;marrer')
     }
     moveUpdate() {
-        // MOVE FORWARD WITH CONDITION
-        // COLOR RESULT PREVIOUS MOVE
         for(let i=0; i < $('#NbSteps').val(); i++) {
-            if(this.Grid.GetColor(this.Ant.X, this.Ant.Y) == '#FFFFFF') {
-                this.Grid.SetColor(this.Ant.X, this.Ant.Y, "#000000")
-                this.Ant.Turn("right")
-            }
-            else if(this.Grid.GetColor(this.Ant.X, this.Ant.Y) == '#000000') {
-                this.Grid.SetColor(this.Ant.X, this.Ant.Y, "#FFFFFF")            
-                this.Ant.Turn("left")
-            }
+            $('#CurrentPattern > tbody').toArray()[0].childNodes.forEach((e, i) => {
+                if(e.dataset.ifColor == this.Grid.GetColor(this.Ant.X, this.Ant.Y)) {
+                    let toColor = $(e.childNodes[1]).find(":selected").val()
+                    let toDirection = $(e.childNodes[2]).find(":selected").val()
+
+                    this.Grid.SetColor(this.Ant.X, this.Ant.Y, toColor)
+                    this.Ant.Turn(toDirection)
+                    
+                }
+            })
         }
     }
     moveStart() {
