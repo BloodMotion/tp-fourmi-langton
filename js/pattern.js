@@ -65,7 +65,6 @@ class Pattern {
                     e.steps.map((e, i) => {
                         $('#CurrentPattern').append(Pattern.GetHtmlRow(e))
                     })
-                    $('#CurrentPattern').append(Pattern.GetHtmlRow(e.steps))
                 } else {
                     $('#Pattern').append('<option value="' + e.name + '">' + e.name + '</option>')
                 }              

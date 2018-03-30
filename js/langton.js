@@ -38,6 +38,8 @@ class Langton {
         $.proxy(this.moveRun(false), this)
         this.Grid.Size = this.Simulation.Size
         this.Ant.Reset(this.Grid.MiddleX, this.Grid.MiddleY)
+        $("#Start").data('state', 'run')
+        $("#Start").html('D&eacute;marrer')
     }
     moveUpdate() {
         // MOVE FORWARD WITH CONDITION
@@ -56,18 +58,12 @@ class Langton {
     moveStart() {
         // Start & stop
         if($("#Start").data('state') === 'stop') {
-            console.log("Stopped")
-
             $("#Start").data('state', 'run')
             $("#Start").html('D&eacute;marrer')
-            
             $.proxy(this.moveRun(false), this)
         } else {
-            console.log("Running")
-
             $("#Start").data('state', 'stop')
             $("#Start").html('Arreter')
-            
             $.proxy(this.moveRun(true), this)
         }
     }
